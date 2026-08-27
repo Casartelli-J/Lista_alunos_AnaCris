@@ -14,7 +14,7 @@ export const getAlunos = async (req, res) => {
 
     if(nome){
         sql += ` AND nome LIKE ?`;
-        params.push(nome);
+        params.push(`%${nome}%`);
     }
 
     const [busca] = await db.query(sql, params);
@@ -29,6 +29,21 @@ export const postAlunos = async (req, res) => {
     if(nome === ""){
         res.status(404).json("Insira o nome")
     }
+
+    if(cor === "" && cor.Nan){
+        res.status(404).json("Insira uma cor válida")
+    }
+    if(tamanho === "" && tamanho.Nan){
+        res.status(404).json("Insira um tamamho válida")
+    }
+    if(malha === "" && malha.Nan){
+        res.status(404).json("Insira uma malha válida")
+    }
+    if(preco === "" && preco.Nan){
+        res.status(404).json("Insira um preco válida")
+    }
+
+
     if(nome && cor && tamanho && malha && preco){
         const post = await db.query(sql, [nome, cor, tamanho, malha, preco]);
         res.status(201).json("Aluno inserido");
@@ -39,6 +54,23 @@ export const putAlunos = async (req, res) => {
     const {id} = req.params;
     let {nome, cor, tamanho, malha, preco} = req.body;
     let sql = "UPDATE alunos SET nome = ?, cor = ?, tamanho = ?, malha = ?, preco = ? WHERE id = ?";
+
+     if(nome === ""){
+        res.status(404).json("Insira o nome")
+    }
+
+    if(cor === "" && cor.Nan){
+        res.status(404).json("Insira uma cor válida")
+    }
+    if(tamanho === "" && tamanho.Nan){
+        res.status(404).json("Insira um tamamho válida")
+    }
+    if(malha === "" && malha.Nan){
+        res.status(404).json("Insira uma malha válida")
+    }
+    if(preco === "" && preco.Nan){
+        res.status(404).json("Insira um preco válida")
+    }
 
     if(nome && cor && tamanho && malha && preco && id){
         const post = await db.query(sql, [nome, cor, tamanho, malha, preco, id]);
