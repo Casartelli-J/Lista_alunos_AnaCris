@@ -13,18 +13,24 @@ async function getAlunos(){
 	let corpoLista = "";
 	listaAlunos.forEach( aluno => {
 		if(aluno.cor === 0){
-			aluno.cor = "Rosa"
+			aluno.cor = "Rosa bebê";
 		}else if(aluno.cor === 1){
-			aluno.cor = "Rosa claro"
+			aluno.cor = "Rosa pink";
 		}
 
 		if(aluno.tamanho === 0){
-			aluno.tamanho = "P"
+			aluno.tamanho = "P";
 		}else if(aluno.tamanho === 1){
-			aluno.tamanho = "M"
+			aluno.tamanho = "M";
+		}
+
+		if(aluno.malha === 0){
+			aluno.malha = "Algodão";
+		}else if(aluno.malha === 1){
+			aluno.malha = "Dry Fit";
 		}
 		corpoLista += `
-			<tr>
+			<tr class="text-center">
 				<td>
 					${aluno.nome}
 				</td>
@@ -38,11 +44,11 @@ async function getAlunos(){
 					${aluno.malha}
 				</td>
 				<td>
-					${aluno.preco}
+					R$ ${aluno.preco}
 				</td>
 				<td>
 					<button class="btn btn-primary">Editar</button>
-					<button class="btn btn-danger">Excluir</button>
+					<button class="btn btn-danger" onclick="deletarAluno(${aluno.id})">Excluir</button>
 				</td>
 			</tr>
 		`
@@ -54,7 +60,7 @@ getAlunos();
 
 async function postAluno(){
 	// const novoAluno = {
-		const nome = document.querySelector("#nome").value
+		const nome = document.querySelector("#modalNome").value
 		const cor = document.querySelector("#cor").value
 		const tamanho = document.querySelector("#tamanho").value
 		const malha = document.querySelector("#malha").value
@@ -75,5 +81,16 @@ async function postAluno(){
 		})
 	})
 
-	console.log("Foi?")
+	getAlunos();
+}
+
+async function deletarAluno(id){
+	const deletar = await fetch(`http://localhost:3000/alunos/${id}`, {
+		method : "DELETE",
+		headers : {
+			"Content-Type" : "application/json"
+		}
+	})
+
+	getAlunos();
 }
