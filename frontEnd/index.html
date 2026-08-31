@@ -13,7 +13,71 @@
 	</style>
 </head>
 <body>
-
+	<div class="modal fade" id="updModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+    		<div class="modal-content">
+        		<div class="modal-header">
+	        		<h1 class="modal-title fs-5">Adicionar Aluno</h1>
+	        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      		</div>
+	    		<div class="modal-body">
+        			<form>
+						<div class="mb-3">
+							<label class="form-label">Nome</label>
+							<input type="email" class="form-control" id="updNome">
+						</div>
+						<div class="mb-3">
+					    	<label class="form-label">Cor</label>
+					    	<select class="form-select" id="updCor">
+					    		<option>
+				    				---
+					    		</option>
+					    		<option value="0">
+				    				Rosa bebê
+					    		</option>
+					    		<option value="1">
+				    				Rosa pink
+					    		</option>
+					    	</select>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Tamanho</label>
+							<select class="form-select" id="updTamanho">
+					    		<option>
+				    				---
+					    		</option>
+					    		<option value="0">
+				    				P
+					    		</option>
+					    		<option value="1">
+				    				M
+					    		</option>
+					    	</select>
+						</div>
+						<div class="mb-3">
+					    	<label class="form-label">Malha</label>
+					    	<select class="form-select" id="udpMalha">
+					    		<option>
+				    				---
+					    		</option>
+					    		<option value="0">
+				    				Algodão
+					    		</option>
+					    		<option value="1">
+				    				Dry Fit
+					    		</option>
+					    	</select>
+						</div>
+						<div class="mb-3">
+							<label for="exampleInputEmail1" class="form-label">Preço</label>
+							<input type="number" class="form-control" id="updPreco">
+						</div>
+					  	<button type="button" class="btn btn-primary" data-bs-dismiss="updModal" onclick="updAluno()">Atualizar</button>
+					</form>
+	      		</div>	
+	    	</div>
+		</div>
+	</div>
 	<div class="modal fade" id="modalAdd" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
     		<div class="modal-content">
@@ -34,10 +98,10 @@
 				    				---
 					    		</option>
 					    		<option value="0">
-				    				Rosa
+				    				Rosa bebê
 					    		</option>
 					    		<option value="1">
-				    				Rosa claro
+				    				Rosa pink
 					    		</option>
 					    	</select>
 						</div>
@@ -114,8 +178,11 @@
 						</table>
 					</div>
 					<div class="col-2 text-center align-self-center">
-						<button class="btn btn-dark px-5 py-2 m-0" data-bs-toggle="modal" data-bs-target="#modalAdd">
+						<button class="btn btn-dark px-5 py-2 m-0 mb-3" onclick="pegaDadosAluno()" data-bs-toggle="modal" data-bs-target="#modalAdd">
 							Adicionar Aluno
+						</button>
+						<button class="btn btn-dark px-5 py-2 m-0" data-bs-toggle="modal" data-bs-target="#updModal">
+							Atualizar Aluno
 						</button>
 					</div>
 				</div>
