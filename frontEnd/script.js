@@ -19,9 +19,15 @@ async function getAlunos(){
 		}
 
 		if(aluno.tamanho === 0){
-			aluno.tamanho = "P";
+			aluno.tamanho = "PP";
 		}else if(aluno.tamanho === 1){
+			aluno.tamanho = "P";
+		}else if(aluno.tamanho === 2){
 			aluno.tamanho = "M";
+		}else if(aluno.tamanho === 3){
+			aluno.tamanho = "G";
+		}else if(aluno.tamanho === 4){
+			aluno.tamanho = "GG";
 		}
 
 		if(aluno.malha === 0){
@@ -47,7 +53,7 @@ async function getAlunos(){
 					R$ ${aluno.preco}
 				</td>
 				<td>
-					<button class="btn btn-primary">Editar</button>
+					<button class="btn btn-primary" onclick="pegaDadosAluno(${aluno.id})" data-bs-toggle="modal" data-bs-target="#updModal">Editar</button>
 					<button class="btn btn-danger" onclick="deletarAluno(${aluno.id})">Excluir</button>
 				</td>
 			</tr>
@@ -58,14 +64,61 @@ async function getAlunos(){
 }
 getAlunos();
 
+async function pegaDadosAluno(id){
+	const pegaDado = await fetch(`http://localhost:3000/alunos?id=${id}`, {
+		method : "GET",
+		headers : {
+			"Content-Type" : "application/json"
+		}
+	})
+
+	const dadoTratado = await pegaDado.json();
+	document.querySelector("#updId").value = dadoTratado[0].id;
+	document.querySelector("#updNome").value = dadoTratado[0].nome;
+	document.querySelector("#updCor").value = dadoTratado[0].cor;
+	document.querySelector("#updTamanho").value = dadoTratado[0].tamanho;
+	document.querySelector("#updMalha").value = dadoTratado[0].malha;
+	document.querySelector("#updPreco").value = dadoTratado[0].preco;
+
+}
+
+async function updAluno(){
+	
+	const id = document.querySelector("#updId").value;
+	const nome = document.querySelector("#updNome").value
+	const cor = document.querySelector("#updCor").value
+	const tamanho = document.querySelector("#updTamanho").value
+	const malha = document.querySelector("#updMalha").value
+	const preco = document.querySelector("#updPreco").value
+
+	const update = await fetch(`http://localhost:3000/alunos/${id}`, {
+		method : "PUT",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify({
+			nome : nome,
+			cor : cor,
+			tamanho : tamanho,
+			malha : malha,
+			preco : preco
+		})
+	})
+	if(!update){
+		console.log("Não foi")
+	}else{
+		document.querySelector("#updForm").reset()
+		getAlunos();
+	}
+}
+
 async function postAluno(){
-	// const novoAluno = {
-		const nome = document.querySelector("#modalNome").value
-		const cor = document.querySelector("#cor").value
-		const tamanho = document.querySelector("#tamanho").value
-		const malha = document.querySelector("#malha").value
-		const preco = document.querySelector("#preco").value
-	// }
+
+	const nome = document.querySelector("#modalNome").value
+	const cor = document.querySelector("#cor").value
+	const tamanho = document.querySelector("#tamanho").value
+	const malha = document.querySelector("#malha").value
+	const preco = document.querySelector("#preco").value
 
 	const post = await fetch(`http://localhost:3000/alunos`, {
 		method : "POST",
@@ -81,16 +134,24 @@ async function postAluno(){
 		})
 	})
 
-	getAlunos();
+	if(!post.ok){
+		console.log("N")
+	}else{
+		getAlunos();
+		document.querySelector("#addForm").reset();
+	}
 }
 
 async function deletarAluno(id){
-	const deletar = await fetch(`http://localhost:3000/alunos/${id}`, {
-		method : "DELETE",
-		headers : {
-			"Content-Type" : "application/json"
-		}
-	})
+	const conf = confirm("Tem certeza?");
+	if(conf){
+		const deletar = await fetch(`http://localhost:3000/alunos/${id}`, {
+			method : "DELETE",
+			headers : {
+				"Content-Type" : "application/json"
+			}
+		})
+	}
 
 	getAlunos();
 }
