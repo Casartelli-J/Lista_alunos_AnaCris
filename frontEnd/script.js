@@ -16,6 +16,8 @@ async function getAlunos(){
 			aluno.cor = "Rosa bebê";
 		}else if(aluno.cor === 1){
 			aluno.cor = "Rosa pink";
+		}else if(aluno.cor === 2){
+			aluno.cor = "Azul"
 		}
 
 		if(aluno.tamanho === 0){

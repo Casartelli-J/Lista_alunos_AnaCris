@@ -85,3 +85,13 @@ export const deleteAlunos = async (req, res) => {
     const del = await db.query(sql, [id]);
     res.status(201).json("Aluno deletado")
 }
+
+export const checkAlunos = async (req, res) => {
+    const {id} = req.params;
+    const sql = "SELECT pago_check FROM alunos WHERE 1 AND id = ?";
+
+    const get = await db.query(sql, [id]);
+    res.status(201).json(get[0])
+
+    
+}

@@ -7,5 +7,6 @@ alunoRouter.get("/", alunos.getAlunos);
 alunoRouter.post("/", alunos.postAlunos);
 alunoRouter.put("/:id", alunos.putAlunos);
 alunoRouter.delete("/:id", alunos.deleteAlunos);
+alunoRouter.get("/:id", alunos.checkAlunos);
 
 export default alunoRouter;
