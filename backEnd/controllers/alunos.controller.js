@@ -17,6 +17,7 @@ export const getAlunos = async (req, res) => {
         params.push(`%${nome}%`);
     }
 
+    sql += " ORDER BY nome"
     const [busca] = await db.query(sql, params);
     res.status(201).json(busca);
 
@@ -91,7 +92,8 @@ export const checkAlunos = async (req, res) => {
     const sql = "SELECT pago_check FROM alunos WHERE 1 AND id = ?";
 
     const get = await db.query(sql, [id]);
-    res.status(201).json(get[0])
+    res.status(201).json(get[0].pago_check)
+    
 
     
 }
