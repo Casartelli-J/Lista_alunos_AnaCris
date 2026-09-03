@@ -66,6 +66,7 @@ async function getAlunos(){
 }
 getAlunos();
 
+
 async function pegaDadosAluno(id){
 	const pegaDado = await fetch(`http://localhost:3000/alunos?id=${id}`, {
 		method : "GET",

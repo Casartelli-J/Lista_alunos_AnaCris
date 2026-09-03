@@ -18,7 +18,6 @@
     		<div class="modal-content">
         		<div class="modal-header">
 	        		<h1 class="modal-title fs-5">Atualizar Aluno</h1>
-	        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      		</div>
 	    		<div class="modal-body">
         			<form id="updForm">
@@ -96,7 +95,6 @@
     		<div class="modal-content">
         		<div class="modal-header">
 	        		<h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Aluno</h1>
-	        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      		</div>
 	    		<div class="modal-body">
         			<form id="addForm">
@@ -181,8 +179,7 @@
 			<div class="col-12 mt-3">
 				<div class="col-12">
 					<div class="input-group my-3">
-		  				<input type="text" class="form-control" id="nome" placeholder="Nome do aluno" aria-label="Nome do aluno">
-		  				<button class="btn btn-success" type="button" onclick="getAlunos()">Buscar</button>
+		  				<input type="text" class="form-control" id="nome" placeholder="Nome do aluno" onkeydown="getAlunos()" aria-label="Nome do aluno">
 					</div>
 				</div>
 				<div class="row d-flex">
