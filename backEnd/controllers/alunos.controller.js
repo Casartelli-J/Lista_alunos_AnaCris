@@ -46,7 +46,7 @@ export const postAlunos = async (req, res) => {
 
 
     if(nome && cor && tamanho && malha && preco){
-        const post = await db.query(sql, [nome, cor, tamanho, malha, preco]);
+        const [post] = await db.query(sql, [nome, cor, tamanho, malha, preco]);
         res.status(201).json("Aluno inserido");
     }
 }
@@ -74,7 +74,7 @@ export const putAlunos = async (req, res) => {
     }
 
     if(nome && cor && tamanho && malha && preco && id){
-        const post = await db.query(sql, [nome, cor, tamanho, malha, preco, id]);
+        const [post] = await db.query(sql, [nome, cor, tamanho, malha, preco, id]);
         res.status(201).json("Aluno atualizado");
     }
 }
@@ -83,16 +83,27 @@ export const deleteAlunos = async (req, res) => {
     const {id} = req.params;
     const sql = "DELETE FROM alunos WHERE id = ?";
 
-    const del = await db.query(sql, [id]);
+    const [del] = await db.query(sql, [id]);
     res.status(201).json("Aluno deletado")
 }
 
 export const checkAlunos = async (req, res) => {
     const {id} = req.params;
-    const sql = "SELECT pago_check FROM alunos WHERE 1 AND id = ?";
+    const sql = "SELECT pagamento FROM alunos WHERE id = ?";
 
-    const get = await db.query(sql, [id]);
-    res.status(201).json(get[0].pago_check)
+    const [get] = await db.query(sql, [id]);
+    let check = "";
+
+    if(get[0].pagamento === 0){
+        check = "UPDATE alunos SET pagamento = 1 WHERE id = ?";
+    }else if(get[0].pagamento === 1){
+        check = "UPDATE alunos SET pagamento = 0 WHERE id = ?";
+    }
+
+
+    const [result] = await db.query(check, [id]);
+    res.status(201).json("Troca realizada");
+
     
 
     

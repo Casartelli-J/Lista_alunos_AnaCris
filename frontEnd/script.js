@@ -37,6 +37,13 @@ async function getAlunos(){
 		}else if(aluno.malha === 1){
 			aluno.malha = "Dry Fit";
 		}
+
+		let bt_pay = ``;
+		if(aluno.pagamento === 0){
+			bt_pay = `<button class="btn btn-danger" onclick="checkAluno(${aluno.id})"><i class="bi bi-person-x-fill"></i> Não pagou</button>`
+		}else if(aluno.pagamento === 1){
+			bt_pay = `<button class="btn btn-success" onclick="checkAluno(${aluno.id})"><i class="bi bi-person-check-fill"></i> Pagou</button>`
+		}
 		corpoLista += `
 			<tr class="text-center">
 				<td>
@@ -55,8 +62,9 @@ async function getAlunos(){
 					R$ ${aluno.preco}
 				</td>
 				<td>
-					<button class="btn btn-primary" onclick="pegaDadosAluno(${aluno.id})" data-bs-toggle="modal" data-bs-target="#updModal">Editar</button>
-					<button class="btn btn-danger" onclick="deletarAluno(${aluno.id})">Excluir</button>
+					<button class="btn btn-danger" onclick="deletarAluno(${aluno.id})"><i class="bi bi-trash3"></i> Excluir</button>
+					<button class="btn btn-primary" onclick="pegaDadosAluno(${aluno.id})" data-bs-toggle="modal" data-bs-target="#updModal"><i class="bi bi-pencil-square"></i> Editar</button>
+					${bt_pay}
 				</td>
 			</tr>
 		`
@@ -155,6 +163,17 @@ async function deletarAluno(id){
 			}
 		})
 	}
+
+	getAlunos();
+}
+
+async function checkAluno(id){
+	const check = await fetch(`http://localhost:3000/alunos/${id}`, {
+		method : "GET",
+		headers : {
+			"Content-Type" : "application/json"
+		}
+	})
 
 	getAlunos();
 }
